@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name = "black">
+        #000000
+    </color>
+    <color name = "twitter_logo">
+    	#00ACEE    
+    </color>
+    
+    <color name= "twitter_verified">
+        #1dcaff
+    </color>
+    <color name="timeline_bg">
+        #F0FFFF
+    </color>
+    <color name ="white">
+        #FFFFFF
+     </color>
+     <color name = "red">
+     	#FF0000    
+     </color>
+     <color name = "bar_grey">
+         #222222
+     </color>
+    
+</resources>
