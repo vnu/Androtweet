@@ -20,6 +20,7 @@
     <item
         android:id="@+id/action_tweet"
         android:orderInCategory="1"
+        android:actionLayout="@layout/tweet_btn"
         android:showAsAction="always"
         android:title="@string/tweet"/>
 

@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,7 +28,7 @@ public class ComposeActivity extends Activity {
 	public static final int COMPOSE_ACTIVITY_ID = 200;
 	public static final int TWEET_SIZE = 140;
 	static Button notifCount;
-//	static Button btnTweet;
+	static Button btnTweet;
 
 	EditText etCompose;
 	int tweetCnt;
@@ -62,49 +63,61 @@ public class ComposeActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.compose, menu);
-		
-		 View count = menu.findItem(R.id.action_count).getActionView();
-//		 View tweet = menu.findItem(R.id.action_tweet).getActionView();
-		    notifCount = (Button) count.findViewById(R.id.notif_count);
-//		    btnTweet = (Button) tweet.findViewById(R.id.btnTweet);
-		    return super.onCreateOptionsMenu(menu);
-//		return true;
-	}
-	
 
-	
-	private void registerTweetCounter(){
+		View count = menu.findItem(R.id.action_count).getActionView();
+		notifCount = (Button) count.findViewById(R.id.notif_count);
+		View tweet = menu.findItem(R.id.action_tweet).getActionView();
+		btnTweet = (Button) tweet.findViewById(R.id.btnTweet);
+		btnTweet.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				updateTweet();
+			}
+		});
+		btnTweet.setClickable(false);
+//		btnTweet.setEnabled(false);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	private void registerTweetCounter() {
 		etCompose.addTextChangedListener(new TextWatcher() {
 			@Override
-			public void afterTextChanged(Editable textView) {				
+			public void afterTextChanged(Editable textView) {
 				int len = etCompose.length();
 				tweetCnt = TWEET_SIZE - len;
 				notifCount.setText(String.valueOf(tweetCnt));
-				if (tweetCnt < 0 || tweetCnt == 140){
-					notifCount.setTextColor(getResources().getColor(R.color.red));
-//					btnTweet.setTextColor(getResources().getColor(R.color.white));
-//					btnTweet.setClickable(false);
+				if (tweetCnt < 0 || tweetCnt == 140) {
+					notifCount.setTextColor(getResources()
+							.getColor(R.color.red));
+					btnTweet.setTextColor(getResources()
+							.getColor(R.color.white));
+					btnTweet.setClickable(false);
 //					btnTweet.setEnabled(false);
 				}
-				if (tweetCnt >= 0 && tweetCnt < 140){
-					notifCount.setTextColor(getResources().getColor(R.color.white));
-//					btnTweet.setTextColor(getResources().getColor(R.color.twitter_logo));
-//					btnTweet.setClickable(true);
+				if (tweetCnt >= 0 && tweetCnt < 140) {
+					notifCount.setTextColor(getResources().getColor(
+							R.color.white));
+					btnTweet.setTextColor(getResources().getColor(
+							R.color.twitter_logo));
 //					btnTweet.setEnabled(true);
+					btnTweet.setClickable(true);
 				}
 				return;
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 				return;
 			}
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int count, int after) {
+			public void onTextChanged(CharSequence s, int start, int count,
+					int after) {
 				return;
 			}
-		});		
+		});
 	}
 
 	@SuppressLint("NewApi")
@@ -122,7 +135,7 @@ public class ComposeActivity extends Activity {
 			NavUtils.navigateUpTo(this, getParentActivityIntent());
 			return true;
 		case R.id.action_tweet:
-			updateTweet();
+//			updateTweet();
 			break;
 		case R.id.action_logout:
 			AndroTweet.getRestClient().clearAccessToken();
@@ -136,31 +149,34 @@ public class ComposeActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	public void updateTweet(){
+
+	public void updateTweet() {
 		String tweetStatus = etCompose.getText().toString();
-		RequestParams params = new RequestParams();
-		params.put("status", tweetStatus);
+//		int count = tweetStatus.length();
+//		if (count > 0 && count < 140) {
+			RequestParams params = new RequestParams();
+			params.put("status", tweetStatus);
 
-		AndroTweet.getRestClient().updateTweet(params,
-				new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(JSONArray Tweets) {
-						Toast.makeText(getApplicationContext(), "Coolio",
-								Toast.LENGTH_LONG).show();
-					}
+			AndroTweet.getRestClient().updateTweet(params,
+					new JsonHttpResponseHandler() {
+						@Override
+						public void onSuccess(JSONArray Tweets) {
+							Toast.makeText(getApplicationContext(), "Coolio",
+									Toast.LENGTH_LONG).show();
+						}
 
-					@Override
-					public void onFinish() {
-						returnToTimeline();
-					}
+						@Override
+						public void onFinish() {
+							returnToTimeline();
+						}
 
-					@Override
-					public void onFailure(Throwable error, String content) {
-						Toast.makeText(getApplicationContext(), "Oops",
-								Toast.LENGTH_LONG).show();
-					}
-				});
+						@Override
+						public void onFailure(Throwable error, String content) {
+							Toast.makeText(getApplicationContext(), "Oops",
+									Toast.LENGTH_LONG).show();
+						}
+					});
+//		}
 	}
 
 	@Override

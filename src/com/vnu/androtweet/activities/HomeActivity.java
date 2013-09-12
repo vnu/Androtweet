@@ -23,7 +23,7 @@ import com.vnu.androtweet.listeners.EndlessScrollListener;
 import com.vnu.androtweet.models.Tweet;
 
 public class HomeActivity extends Activity {
-	public static final String TWEET_COUNT = "25";
+	public static final String TWEET_COUNT = "30";
 	ListView lvTweets;
 	ArrayList<Tweet> tweets;
 	TweetsAdapter adapter;
@@ -105,6 +105,7 @@ public class HomeActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_compose:
+			tweets.clear();
 			Intent intent = new Intent(this, ComposeActivity.class);
 			startActivityForResult(intent, ComposeActivity.COMPOSE_ACTIVITY_ID);
 			break;
