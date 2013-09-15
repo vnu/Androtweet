@@ -73,9 +73,9 @@ public class HomeActivity extends Activity {
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
-						tweets.addAll(Tweet.fromJson(jsonTweets));
-						Collections.sort(tweets);
-						adapter.notifyDataSetChanged();
+						adapter.addAll(Tweet.fromJson(jsonTweets));
+//						Collections.sort(tweets);
+//						adapter.notifyDataSetChanged();
 					}
 
 					@Override
