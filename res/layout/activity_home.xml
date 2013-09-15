@@ -4,15 +4,14 @@
     android:layout_height="match_parent"
     android:background="@color/timeline_bg"
     tools:context=".HomeActivity" >
-    
-    <ListView
-        android:id="@+id/lvTweets"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+    <fragment
+        android:id="@+id/fragmentTweetline"
+        android:name="com.vnu.androtweet.activities.fragments.MentionsFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
-    </ListView>
-
-
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/fragment_tweetline" />
 
 </RelativeLayout>
