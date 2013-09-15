@@ -44,7 +44,7 @@ public class HomeFragment extends TweetlineFragment {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
 //						adapter.addAll(Tweet.fromJson(jsonTweets));
-					getAdapter().addAll(Tweet.fromJson(jsonTweets));
+						getAdapter().addAll(Tweet.fromJson(jsonTweets));
 					}
 
 					@Override

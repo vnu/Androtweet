@@ -9,11 +9,13 @@
         android:id="@+id/action_logout"
         android:orderInCategory="200"
         android:showAsAction="never"
+        android:onClick="onLogout"
         android:title="@string/logout"/>
      <item
         android:id="@+id/action_compose"
         android:icon="@drawable/compose_new"        
         android:showAsAction="always"
+        android:onClick="onComposeView"
         android:title="@string/compose"/>
 
 </menu>
