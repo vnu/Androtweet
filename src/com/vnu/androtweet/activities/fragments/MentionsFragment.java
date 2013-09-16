@@ -29,6 +29,11 @@ public class MentionsFragment extends TweetlineFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (tweets.isEmpty()) {
+			getMentionsline(null);
+		} else {
+			getAdapter().addAll(tweets);
+		}
 		getMentionsline(null);
 	}
 
