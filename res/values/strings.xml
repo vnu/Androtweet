@@ -14,6 +14,8 @@
     <string name="pic">Profile Pic</string>
     <string name="compose">Compose</string>
     <string name="logout">LogOut</string>
+    <string name="profile_img">ProfileImage</string>
+    <string name="profile_bg">ProfileBg</string>
     
     
 

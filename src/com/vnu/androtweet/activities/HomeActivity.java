@@ -15,6 +15,7 @@ import com.vnu.androtweet.AndroTweet;
 import com.vnu.androtweet.R;
 import com.vnu.androtweet.activities.fragments.HomeFragment;
 import com.vnu.androtweet.activities.fragments.MentionsFragment;
+import com.vnu.androtweet.activities.fragments.ProfileFragment;
 
 public class HomeActivity extends SherlockFragmentActivity implements
 		TabListener {
@@ -61,7 +62,7 @@ public class HomeActivity extends SherlockFragmentActivity implements
 		} else if (selectedTab == "HashFragment") {
 			fts.replace(R.id.frame_container, new HomeFragment());
 		} else {
-			fts.replace(R.id.frame_container, new MentionsFragment());
+			fts.replace(R.id.frame_container, new ProfileFragment());
 		}
 		fts.commit();
 	}
