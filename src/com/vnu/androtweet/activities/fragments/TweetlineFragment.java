@@ -22,21 +22,26 @@ public class TweetlineFragment extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		return inflater.inflate(R.layout.fragment_tweetline, container, false);
+		View v = inflater.inflate(R.layout.fragment_tweetline, container, false);
+		lvTweets = (ListView) v.findViewById(R.id.lvTweets);
+		lvTweets.setAdapter(adapter);
+		return v;
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		initialConfig();
 	}
 	
 	public void initialConfig() {
 		tweets = new ArrayList<Tweet>();
 		adapter = new TweetsAdapter(getActivity(), tweets);
-		lvTweets = (ListView) getActivity().findViewById(R.id.lvTweets);
-		lvTweets.setAdapter(adapter);
 	}
 	
 	public TweetsAdapter getAdapter(){

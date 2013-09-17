@@ -28,18 +28,18 @@ public class HomeFragment extends TweetlineFragment {
 		super.onCreate(savedInstanceState);
 		tweets = new ArrayList<Tweet>();
 		Log.d("HOMEF", "HOMEFONCREATE");
-		getHomeline(null);
+//		getHomeline(null);
 		// setUpInfiniteScroll();
 	};
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		if (tweets.isEmpty()) {
+//		if (tweets.isEmpty()) {
 			getHomeline(null);
-		} else {
-			getAdapter().addAll(tweets);
-		}
+//		} else {
+//			getAdapter().addAll(tweets);
+//		}
 		Log.d("HOMEF", "RESUME");
 	}
 
