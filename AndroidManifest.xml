@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="18" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -23,6 +23,7 @@
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="1" />
+
         <activity
             android:name="com.vnu.androtweet.activities.LoginActivity"
             android:label="@string/app_name" >
@@ -49,7 +50,7 @@
         <activity
             android:name="com.vnu.androtweet.activities.ComposeActivity"
             android:label="@string/title_activity_compose"
-            android:parentActivityName = "com.vnu.androtweet.activities.HomeActivity" >
+            android:parentActivityName="com.vnu.androtweet.activities.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vnu.androtweet.HomeActivity" />

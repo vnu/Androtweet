@@ -23,12 +23,6 @@ public class ProfileFragment extends SherlockFragment {
 	RequestParams params;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		getProfileInfo();
-	}
-
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.fragment_profile, container, false);
@@ -37,7 +31,7 @@ public class ProfileFragment extends SherlockFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
+		getProfileInfo();
 	}
 
 	public void setProfileInfo(User user) {
