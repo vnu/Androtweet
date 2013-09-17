@@ -27,32 +27,28 @@ public class HomeFragment extends TweetlineFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		tweets = new ArrayList<Tweet>();
-		Log.d("HOMEF", "HOMEFONCREATE");
-//		getHomeline(null);
+		// getHomeline(null);
 		// setUpInfiniteScroll();
 	};
 
 	@Override
 	public void onResume() {
 		super.onResume();
-//		if (tweets.isEmpty()) {
-			getHomeline(null);
-//		} else {
-//			getAdapter().addAll(tweets);
-//		}
-		Log.d("HOMEF", "RESUME");
+		// if (tweets.isEmpty()) {
+		getHomeline(null);
+		// } else {
+		// getAdapter().addAll(tweets);
+		// }
 	}
 
 	public void getHomeline(RequestParams params) {
-		Log.d("HOMEF", "HOMEFTimelineE");
 		AndroTweet.getRestClient().getHomeTimeline(params,
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
-						Log.d("HOMEF", "SUCCESS");
 						// adapter.addAll(Tweet.fromJson(jsonTweets));
 						getAdapter().addAll(Tweet.fromJson(jsonTweets));
-						Log.d("HOMEF", getAdapter().toString());
+
 					}
 
 					@Override
@@ -80,8 +76,6 @@ public class HomeFragment extends TweetlineFragment {
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {
 			@Override
 			public void loadMore(int page, int totalItemsCount) {
-				// whatever code is needed to append new items to your
-				// AdapterView
 				getOldTweets();
 			}
 		});
