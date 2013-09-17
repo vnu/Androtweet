@@ -16,47 +16,51 @@ import com.vnu.androtweet.listeners.EndlessScrollListener;
 import com.vnu.androtweet.models.Tweet;
 
 public class HomeFragment extends TweetlineFragment {
-	
+
 	public static final String TWEET_COUNT = "30";
 	ListView lvTweets;
-//	ArrayList<Tweet> tweets;
-//	TweetsAdapter tadapter;
+	// ArrayList<Tweet> tweets;
+	// TweetsAdapter tadapter;
 	RequestParams params;
 
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		tweets = new ArrayList<Tweet>();
-		getHomeline(null);
-//		setUpInfiniteScroll();
+		// getHomeline(null);
+		// setUpInfiniteScroll();
 	};
-	
+
 	@Override
 	public void onResume() {
 		super.onResume();
+		// if (tweets.isEmpty()) {
 		getHomeline(null);
+		// } else {
+		// getAdapter().addAll(tweets);
+		// }
 	}
-	
+
 	public void getHomeline(RequestParams params) {
 		AndroTweet.getRestClient().getHomeTimeline(params,
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
-//						adapter.addAll(Tweet.fromJson(jsonTweets));
+						// adapter.addAll(Tweet.fromJson(jsonTweets));
 						getAdapter().addAll(Tweet.fromJson(jsonTweets));
+
 					}
 
 					@Override
 					public void onFailure(Throwable error, String content) {
 						Log.e("Failed", content);
 
-						Toast.makeText(getActivity(), "Oops",
-								Toast.LENGTH_LONG).show();
+						Toast.makeText(getActivity(), "Oops", Toast.LENGTH_LONG)
+								.show();
 					}
 				});
 	}
-	
+
 	public void getOldTweets() {
 		if (tweets != null && !tweets.isEmpty()) {
 			params = new RequestParams();
@@ -67,17 +71,14 @@ public class HomeFragment extends TweetlineFragment {
 
 		}
 	}
-	
+
 	public void setUpInfiniteScroll() {
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {
 			@Override
 			public void loadMore(int page, int totalItemsCount) {
-				// whatever code is needed to append new items to your
-				// AdapterView
 				getOldTweets();
 			}
 		});
 	}
-
 
 }
