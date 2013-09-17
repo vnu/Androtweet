@@ -21,23 +21,30 @@ import com.vnu.androtweet.models.User;
 
 public class ProfileFragment extends SherlockFragment {
 	RequestParams params;
+	ImageView ivProfile;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		getProfileInfo();
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_profile, container, false);
+		View v = inflater.inflate(R.layout.fragment_profile, container, false);
+		ivProfile = (ImageView) v.findViewById(R.id.ivProfile);
+		return v;
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		getProfileInfo();
 	}
 
 	public void setProfileInfo(User user) {
 		Log.e("I will come here", user.getProfileImageUrl());
-		ImageView ivProfile = (ImageView) getActivity().findViewById(
-				R.id.ivProfile);
+
 		// ImageView ivProfileHeader = (ImageView)
 		// getActivity().findViewById(R.id.ivProfileHeader);
 		TextView tvScreenName = (TextView) getActivity().findViewById(
