@@ -3,6 +3,8 @@
  */
 package com.vnu.androtweet.activities.fragments;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -19,15 +21,23 @@ import android.widget.Toast;
  * 
  */
 public class MentionsFragment extends TweetlineFragment {
+	ArrayList<Tweet> tweets;
+	RequestParams params;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// getMentionsline(null);
+		tweets = new ArrayList<Tweet>();
 	}
 
 	public void getOldTweets() {
-
+		if (tweets != null && !tweets.isEmpty()) {
+			params = new RequestParams();
+			String max_id = tweets.get(tweets.size() - 1).getIdStr();
+			params.put("max_id", max_id);
+			params.put("count", TWEET_COUNT);
+			getMentionsline(params);
+		}
 	}
 
 	@Override

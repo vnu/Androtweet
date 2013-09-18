@@ -22,19 +22,34 @@ import com.vnu.androtweet.models.User;
 public class ProfileFragment extends SherlockFragment {
 	RequestParams params;
 	ImageView ivProfile;
+	TextView tvScreenName;
+	TextView tvStatus;
+	TextView tvTweets;
+	TextView tvFollowing;
+	TextView tvFollowers;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getProfileInfo();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_profile, container, false);
-		ivProfile = (ImageView) v.findViewById(R.id.ivProfile);
+		getProfileInfo();
+		setUpViews(v);
 		return v;
+	}
+
+	public void setUpViews(View v) {
+		ivProfile = (ImageView) v.findViewById(R.id.ivProfile);
+		tvScreenName = (TextView) v.findViewById(R.id.tvScreenName);
+		tvStatus = (TextView) v.findViewById(R.id.tvStatus);
+		tvTweets = (TextView) v.findViewById(R.id.tvTweets);
+		tvFollowing = (TextView) v.findViewById(R.id.tvFollowing);
+		tvFollowers = (TextView) v.findViewById(R.id.tvFollowers);
+
 	}
 
 	@Override
@@ -43,18 +58,6 @@ public class ProfileFragment extends SherlockFragment {
 	}
 
 	public void setProfileInfo(User user) {
-		// ImageView ivProfileHeader = (ImageView)
-		// getActivity().findViewById(R.id.ivProfileHeader);
-		TextView tvScreenName = (TextView) getActivity().findViewById(
-				R.id.tvScreenName);
-		TextView tvStatus = (TextView) getActivity()
-				.findViewById(R.id.tvStatus);
-		TextView tvTweets = (TextView) getActivity()
-				.findViewById(R.id.tvTweets);
-		TextView tvFollowing = (TextView) getActivity().findViewById(
-				R.id.tvFollowing);
-		TextView tvFollowers = (TextView) getActivity().findViewById(
-				R.id.tvFollowers);
 		tvScreenName.setText(user.getName() + " @" + user.getScreenName());
 		tvStatus.setText(user.getDescription());
 		tvTweets.setText(user.getNumTweets() + " Tweets");
@@ -62,8 +65,6 @@ public class ProfileFragment extends SherlockFragment {
 		tvFollowers.setText(user.getFollowersCount() + " Followers");
 		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(),
 				ivProfile);
-		// ImageLoader.getInstance().displayImage(user.getProfileBackgroundImageUrl(),
-		// ivProfileHeader);
 	}
 
 	private void getProfileInfo() {
