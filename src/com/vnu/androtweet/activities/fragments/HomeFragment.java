@@ -6,39 +6,33 @@ import org.json.JSONArray;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.vnu.androtweet.AndroTweet;
-import com.vnu.androtweet.listeners.EndlessScrollListener;
 import com.vnu.androtweet.models.Tweet;
 
 public class HomeFragment extends TweetlineFragment {
 
 	public static final String TWEET_COUNT = "30";
-	ListView lvTweets;
-	// ArrayList<Tweet> tweets;
-	// TweetsAdapter tadapter;
+	ArrayList<Tweet> tweets;
 	RequestParams params;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		tweets = new ArrayList<Tweet>();
-		// getHomeline(null);
-		// setUpInfiniteScroll();
 	};
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		// if (tweets.isEmpty()) {
-		getHomeline(null);
-		// } else {
-		// getAdapter().addAll(tweets);
-		// }
+		if (tweets.isEmpty()) {
+			getHomeline(null);
+		} else {
+			getAdapter().addAll(tweets);
+		}
 	}
 
 	public void getHomeline(RequestParams params) {
@@ -46,15 +40,13 @@ public class HomeFragment extends TweetlineFragment {
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
-						// adapter.addAll(Tweet.fromJson(jsonTweets));
-						getAdapter().addAll(Tweet.fromJson(jsonTweets));
-
+						tweets = Tweet.fromJson(jsonTweets);
+						getAdapter().addAll(tweets);
 					}
 
 					@Override
 					public void onFailure(Throwable error, String content) {
 						Log.e("Failed", content);
-
 						Toast.makeText(getActivity(), "Oops", Toast.LENGTH_LONG)
 								.show();
 					}
@@ -68,17 +60,7 @@ public class HomeFragment extends TweetlineFragment {
 			params.put("max_id", max_id);
 			params.put("count", TWEET_COUNT);
 			getHomeline(params);
-
 		}
-	}
-
-	public void setUpInfiniteScroll() {
-		lvTweets.setOnScrollListener(new EndlessScrollListener() {
-			@Override
-			public void loadMore(int page, int totalItemsCount) {
-				getOldTweets();
-			}
-		});
 	}
 
 }

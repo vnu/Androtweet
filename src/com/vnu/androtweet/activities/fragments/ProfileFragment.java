@@ -43,8 +43,6 @@ public class ProfileFragment extends SherlockFragment {
 	}
 
 	public void setProfileInfo(User user) {
-		Log.e("I will come here", user.getProfileImageUrl());
-
 		// ImageView ivProfileHeader = (ImageView)
 		// getActivity().findViewById(R.id.ivProfileHeader);
 		TextView tvScreenName = (TextView) getActivity().findViewById(
@@ -74,7 +72,6 @@ public class ProfileFragment extends SherlockFragment {
 					@Override
 					public void onSuccess(JSONObject json) {
 						User user = User.fromJson(json);
-						Log.e("User", json.toString());
 						setProfileInfo(user);
 					}
 

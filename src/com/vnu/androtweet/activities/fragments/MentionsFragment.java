@@ -23,18 +23,21 @@ public class MentionsFragment extends TweetlineFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		getMentionsline(null);
+		// getMentionsline(null);
+	}
+
+	public void getOldTweets() {
+
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-//		if (tweets.isEmpty()) {
+		if (tweets.isEmpty()) {
 			getMentionsline(null);
-//		} else {
-//			getAdapter().addAll(tweets);
-//		}
-//		getMentionsline(null);
+		} else {
+			getAdapter().addAll(tweets);
+		}
 	}
 
 	public void getMentionsline(RequestParams params) {
@@ -42,9 +45,8 @@ public class MentionsFragment extends TweetlineFragment {
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
-						// adapter.addAll(Tweet.fromJson(jsonTweets));
-						Log.e("Tweets",jsonTweets.toString());
-						getAdapter().addAll(Tweet.fromJson(jsonTweets));
+						tweets = Tweet.fromJson(jsonTweets);
+						getAdapter().addAll(tweets);
 					}
 
 					@Override
