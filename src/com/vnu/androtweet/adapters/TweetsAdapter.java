@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.vnu.androtweet.R;
 import com.vnu.androtweet.models.Tweet;
+import com.vnu.androtweet.models.User;
 
 public class TweetsAdapter  extends ArrayAdapter<Tweet>{
 
@@ -33,13 +34,16 @@ public class TweetsAdapter  extends ArrayAdapter<Tweet>{
 	    }
 	     
         Tweet tweet = getItem(position);
+        User user = tweet.getUser();
         
-        ImageView imageView = (ImageView) view.findViewById(R.id.ivProfile);
-        ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), imageView);
+        ImageView imageView = (ImageView) view.findViewById(R.id.ivProfilePic);
+        ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), imageView);
+        
+        imageView.setTag(user);
         
         TextView nameView = (TextView) view.findViewById(R.id.tvName);
-        String formattedName = "<b>" + tweet.getUser().getName() + "</b>" + " <small><font color='#777777'>@" +
-                tweet.getUser().getScreenName() + "</font></small>";
+        String formattedName = "<b>" + user.getName() + "</b>" + " <small><font color='#777777'>@" +
+        		user.getScreenName() + "</font></small>";
         nameView.setText(Html.fromHtml(formattedName));
 
         TextView bodyView = (TextView) view.findViewById(R.id.tvBody);

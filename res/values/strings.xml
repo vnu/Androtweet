@@ -16,7 +16,7 @@
     <string name="logout">LogOut</string>
     <string name="profile_img">ProfileImage</string>
     <string name="profile_bg">ProfileBg</string>
-    
-    
+    <string name="title_activity_user_profile">UserProfileActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

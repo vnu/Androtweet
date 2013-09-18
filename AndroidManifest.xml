@@ -55,6 +55,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vnu.androtweet.HomeActivity" />
         </activity>
+        <activity
+            android:name="com.vnu.androtweet.activities.UserProfileActivity"
+            
+            android:label="@string/title_activity_user_profile" >
+        </activity>
     </application>
 
 </manifest>

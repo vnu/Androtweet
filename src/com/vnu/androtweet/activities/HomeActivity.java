@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -15,6 +16,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.vnu.androtweet.AndroTweet;
 import com.vnu.androtweet.R;
 import com.vnu.androtweet.adapters.ViewPagerAdapter;
+import com.vnu.androtweet.models.User;
 
 public class HomeActivity extends SherlockFragmentActivity implements TabListener{
 	Object selectedTab;
@@ -96,5 +98,13 @@ public class HomeActivity extends SherlockFragmentActivity implements TabListene
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(logout);
 		finish();
+	}
+	
+	public void onProfileClick(View v){
+		Intent i = new Intent(this, UserProfileActivity.class);
+		i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		User u = (User) v.getTag();
+		i.putExtra("user", u.getJSONString());
+		startActivity(i);
 	}
 }

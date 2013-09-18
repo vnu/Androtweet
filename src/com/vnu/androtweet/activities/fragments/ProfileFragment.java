@@ -2,6 +2,9 @@ package com.vnu.androtweet.activities.fragments;
 
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +30,8 @@ public class ProfileFragment extends SherlockFragment {
 	TextView tvTweets;
 	TextView tvFollowing;
 	TextView tvFollowers;
+	private User user;
+	View v;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -36,9 +41,13 @@ public class ProfileFragment extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_profile, container, false);
-		getProfileInfo();
+		v = inflater.inflate(R.layout.fragment_profile, container, false);
 		setUpViews(v);
+		if(getUser() == null){
+			getProfileInfo();
+		}else{
+			setProfileInfo();
+		}
 		return v;
 	}
 
@@ -49,7 +58,6 @@ public class ProfileFragment extends SherlockFragment {
 		tvTweets = (TextView) v.findViewById(R.id.tvTweets);
 		tvFollowing = (TextView) v.findViewById(R.id.tvFollowing);
 		tvFollowers = (TextView) v.findViewById(R.id.tvFollowers);
-
 	}
 
 	@Override
@@ -57,8 +65,12 @@ public class ProfileFragment extends SherlockFragment {
 		super.onActivityCreated(savedInstanceState);
 	}
 
-	public void setProfileInfo(User user) {
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@SuppressLint("NewApi")
+	public void setProfileInfo() {
+		getActivity().getActionBar().setTitle(user.getScreenName());
 		tvScreenName.setText(user.getName() + " @" + user.getScreenName());
+		tvScreenName.setTag(user.getScreenName());
 		tvStatus.setText(user.getDescription());
 		tvTweets.setText(user.getNumTweets() + " Tweets");
 		tvFollowing.setText(user.getFriendsCount() + " Following");
@@ -72,8 +84,8 @@ public class ProfileFragment extends SherlockFragment {
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONObject json) {
-						User user = User.fromJson(json);
-						setProfileInfo(user);
+						user = User.fromJson(json);
+						setProfileInfo();
 					}
 
 					@Override
@@ -83,6 +95,14 @@ public class ProfileFragment extends SherlockFragment {
 								.show();
 					}
 				});
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
