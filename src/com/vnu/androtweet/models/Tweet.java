@@ -1,5 +1,6 @@
 package com.vnu.androtweet.models;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,8 +11,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Tweet extends BaseModel implements Comparable<Tweet>{
-    private User user;
+public class Tweet extends BaseModel implements Comparable<Tweet>,Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6138069312309799186L;
+	private User user;
 
     public User getUser() {
         return user;

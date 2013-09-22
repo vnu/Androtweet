@@ -1,6 +1,6 @@
 package com.vnu.androtweet.activities;
 
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -23,12 +23,14 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.vnu.androtweet.AndroTweet;
 import com.vnu.androtweet.R;
+import com.vnu.androtweet.models.Tweet;
 
 public class ComposeActivity extends Activity {
 	public static final int COMPOSE_ACTIVITY_ID = 200;
 	public static final int TWEET_SIZE = 140;
 	static Button notifCount;
 	static Button btnTweet;
+	Tweet tweet = null;
 
 	EditText etCompose;
 	int tweetCnt;
@@ -160,9 +162,10 @@ public class ComposeActivity extends Activity {
 			AndroTweet.getRestClient().updateTweet(params,
 					new JsonHttpResponseHandler() {
 						@Override
-						public void onSuccess(JSONArray Tweets) {
-							Toast.makeText(getApplicationContext(), "Coolio",
-									Toast.LENGTH_LONG).show();
+						public void onSuccess(JSONObject restweet) {
+//							tweet = Tweet.fromJson(restweet);
+//							Toast.makeText(getApplicationContext(), tweet.toString(),
+//									Toast.LENGTH_LONG).show();
 						}
 
 						@Override
@@ -186,11 +189,12 @@ public class ComposeActivity extends Activity {
 	}
 
 	public void returnToTimeline() {
-		Intent i = new Intent();
+		Intent result = new Intent();
+		result.putExtra("tweet", tweet);
 		if (getParent() == null) {
-			setResult(Activity.RESULT_OK, i);
+			setResult(Activity.RESULT_OK, result);
 		} else {
-			getParent().setResult(Activity.RESULT_OK, i);
+			getParent().setResult(Activity.RESULT_OK, result);
 		}
 		finish();
 	}
