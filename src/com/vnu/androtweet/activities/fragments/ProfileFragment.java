@@ -20,9 +20,10 @@ import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.vnu.androtweet.AndroTweet;
 import com.vnu.androtweet.R;
+import com.vnu.androtweet.models.Tweet;
 import com.vnu.androtweet.models.User;
 
-public class ProfileFragment extends SherlockFragment {
+public class ProfileFragment extends SherlockFragment implements AdaptableFragment{
 	RequestParams params;
 	ImageView ivProfile;
 	TextView tvScreenName;
@@ -103,6 +104,13 @@ public class ProfileFragment extends SherlockFragment {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public void prepend(Tweet tweet) {
+//		TweetLineFragement tl = (TweetlineFragment)(getChildFragmentManager().findFragmentById(R.id.flcontainer))
+//		tl
+		
 	}
 
 }

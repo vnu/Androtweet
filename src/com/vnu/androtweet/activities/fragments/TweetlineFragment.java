@@ -14,33 +14,35 @@ import com.vnu.androtweet.adapters.TweetsAdapter;
 import com.vnu.androtweet.listeners.EndlessScrollListener;
 import com.vnu.androtweet.models.Tweet;
 
-public abstract class TweetlineFragment extends SherlockFragment {
+public abstract class TweetlineFragment extends SherlockFragment implements
+		AdaptableFragment {
 	public static final String TWEET_COUNT = "30";
 	ListView lvTweets;
 	ArrayList<Tweet> tweets;
 	TweetsAdapter adapter;
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initialConfig();
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_tweetline, container, false);
+		View v = inflater
+				.inflate(R.layout.fragment_tweetline, container, false);
 		lvTweets = (ListView) v.findViewById(R.id.lvTweets);
 		lvTweets.setAdapter(adapter);
 		setUpInfiniteScroll();
 		return v;
 	}
-	
+
 	public void setUpInfiniteScroll() {
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {
 			@Override
@@ -49,15 +51,20 @@ public abstract class TweetlineFragment extends SherlockFragment {
 			}
 		});
 	}
-	
+
 	abstract protected void getOldTweets();
-	
+
+	@Override
+	public void prepend(Tweet tweet) {
+		getAdapter().insert(tweet, 0);
+	}
+
 	public void initialConfig() {
 		tweets = new ArrayList<Tweet>();
 		adapter = new TweetsAdapter(getActivity(), tweets);
 	}
-	
-	public TweetsAdapter getAdapter(){
+
+	public TweetsAdapter getAdapter() {
 		return adapter;
 	}
 }

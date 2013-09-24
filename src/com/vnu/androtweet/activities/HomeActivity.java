@@ -1,7 +1,9 @@
 package com.vnu.androtweet.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -15,7 +17,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.vnu.androtweet.AndroTweet;
 import com.vnu.androtweet.R;
+import com.vnu.androtweet.activities.fragments.AdaptableFragment;
+import com.vnu.androtweet.activities.fragments.HomeFragment;
+import com.vnu.androtweet.activities.fragments.TweetlineFragment;
 import com.vnu.androtweet.adapters.ViewPagerAdapter;
+import com.vnu.androtweet.models.Tweet;
 import com.vnu.androtweet.models.User;
 
 public class HomeActivity extends SherlockFragmentActivity implements TabListener{
@@ -25,6 +31,7 @@ public class HomeActivity extends SherlockFragmentActivity implements TabListene
 	
 	ViewPager mViewPager;
 	ViewPagerAdapter mAppSectionsPagerAdapter;
+	AdaptableFragment adap_fragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,7 @@ public class HomeActivity extends SherlockFragmentActivity implements TabListene
 		actionbar.addTab(tabMentions);
 		actionbar.addTab(tabHash);
 		actionbar.addTab(tabProfile);
+		
 //		actionbar.selectTab(tabHome);
 	}
 
@@ -68,6 +76,13 @@ public class HomeActivity extends SherlockFragmentActivity implements TabListene
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
 
 		mViewPager.setCurrentItem(tab.getPosition());
+//		mViewPager.getCurrentItem();
+//		mAppSectionsPagerAdapter = (ViewPagerAdapter)mViewPager.getAdapter();
+		adap_fragment = (AdaptableFragment)mAppSectionsPagerAdapter.getItem(tab.getPosition());
+//		adap_fragment = (AdaptableFragment)mViewPager.getSupportFragmentManager().findFragmentByTag("android:switcher:"+mViewPager.getId()+":"+mAppSectionsPagerAdapter.getItemId(tab.getPosition()));
+		
+	
+		
 	}
 
 	@Override
@@ -98,6 +113,15 @@ public class HomeActivity extends SherlockFragmentActivity implements TabListene
 				| Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(logout);
 		finish();
+	}
+	
+	@Override
+	protected void onActivityResult(int requestcode, int resultcode, Intent result) {
+		if(resultcode == Activity.RESULT_OK && requestcode == ComposeActivity.COMPOSE_ACTIVITY_ID){
+			Tweet tweet = (Tweet) result.getSerializableExtra("tweet");
+			adap_fragment.prepend(tweet);
+		}
+		super.onActivityResult(resultcode, requestcode, result);
 	}
 	
 	public void onProfileClick(View v){

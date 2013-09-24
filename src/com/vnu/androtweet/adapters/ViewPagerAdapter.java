@@ -17,11 +17,14 @@ import com.vnu.androtweet.activities.fragments.ProfileFragment;
  *
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+	
+	HomeFragment hf = null;
 
 	public ViewPagerAdapter(FragmentManager fm) {
 		super(fm);
+		hf = new HomeFragment();
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.FragmentPagerAdapter#getItem(int)
 	 * This where the fragment objects are returned based on Position
@@ -31,7 +34,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 		SherlockFragment fragment;
         switch (position) {
             case 0:
-            	fragment = new HomeFragment();
+            	fragment = hf;
                 break;
             case 1:
             	fragment = new MentionsFragment();
@@ -43,7 +46,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             	fragment = new ProfileFragment();
                 break;
             default:
-            	fragment = new HomeFragment();
+            	fragment = hf;
                 break;
               
         }
