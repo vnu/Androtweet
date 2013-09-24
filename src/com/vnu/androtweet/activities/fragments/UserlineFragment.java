@@ -84,7 +84,7 @@ public class UserlineFragment extends TweetlineFragment {
 					public void onFailure(Throwable error, String content) {
 						Log.e("Failed", content);
 
-						Toast.makeText(getActivity(), "Oops", Toast.LENGTH_LONG)
+						Toast.makeText(getActivity(), "Oops " + content, Toast.LENGTH_LONG)
 								.show();
 					}
 				});

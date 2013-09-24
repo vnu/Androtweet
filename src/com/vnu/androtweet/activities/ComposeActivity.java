@@ -163,7 +163,7 @@ public class ComposeActivity extends Activity {
 					new JsonHttpResponseHandler() {
 						@Override
 						public void onSuccess(JSONObject restweet) {
-//							tweet = Tweet.fromJson(restweet);
+							tweet = Tweet.fromJson(restweet);
 //							Toast.makeText(getApplicationContext(), tweet.toString(),
 //									Toast.LENGTH_LONG).show();
 						}

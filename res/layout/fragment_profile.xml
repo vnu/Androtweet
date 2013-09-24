@@ -143,12 +143,21 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/hrSettings" >
 
-        <fragment
+        <!-- <fragment
             android:id="@+id/fragUserLine"
             android:name="com.vnu.androtweet.activities.fragments.UserlineFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout="@layout/fragment_tweetline" />
+            tools:layout="@layout/fragment_tweetline" /> -->
+
+        <FrameLayout
+            android:id="@+id/frlayContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" >
+        </FrameLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

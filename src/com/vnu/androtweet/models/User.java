@@ -1,8 +1,15 @@
 package com.vnu.androtweet.models;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-public class User extends BaseModel {
+public class User extends BaseModel implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 766746845263863121L;
+
 	public String getName() {
 		return getString("name");
 	}

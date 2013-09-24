@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +22,10 @@ import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.vnu.androtweet.AndroTweet;
 import com.vnu.androtweet.R;
+import com.vnu.androtweet.models.Tweet;
 import com.vnu.androtweet.models.User;
 
-public class ProfileFragment extends SherlockFragment {
+public class ProfileFragment extends SherlockFragment implements AdaptableFragment {
 	RequestParams params;
 	ImageView ivProfile;
 	TextView tvScreenName;
@@ -32,6 +35,16 @@ public class ProfileFragment extends SherlockFragment {
 	TextView tvFollowers;
 	private User user;
 	View v;
+	FragmentManager profManager;
+	private UserlineFragment profUserline = null;
+
+	public UserlineFragment getProfUserline() {
+		return profUserline;
+	}
+
+	public void setProfUserline(UserlineFragment profUserline) {
+		this.profUserline = profUserline;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,12 +56,22 @@ public class ProfileFragment extends SherlockFragment {
 			Bundle savedInstanceState) {
 		v = inflater.inflate(R.layout.fragment_profile, container, false);
 		setUpViews(v);
-		if(getUser() == null){
+		if (getUser() == null) {
 			getProfileInfo();
-		}else{
+		} else {
 			setProfileInfo();
 		}
 		return v;
+	}
+
+	public void setUserTimeline() {
+		profManager = getChildFragmentManager();
+		FragmentTransaction fts = profManager.beginTransaction();
+		if (profUserline == null) {
+			profUserline = new UserlineFragment();
+		}
+		fts.replace(R.id.frlayContainer, profUserline);
+		fts.commit();
 	}
 
 	public void setUpViews(View v) {
@@ -77,6 +100,7 @@ public class ProfileFragment extends SherlockFragment {
 		tvFollowers.setText(user.getFollowersCount() + " Followers");
 		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(),
 				ivProfile);
+		setUserTimeline();
 	}
 
 	private void getProfileInfo() {
@@ -103,6 +127,12 @@ public class ProfileFragment extends SherlockFragment {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public void prependTweet(Tweet tweet) {
+		TweetlineFragment tf = (TweetlineFragment)getChildFragmentManager().findFragmentById(R.id.frlayContainer);
+		tf.prependTweet(tweet);
 	}
 
 }

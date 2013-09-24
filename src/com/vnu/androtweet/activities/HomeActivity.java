@@ -1,5 +1,6 @@
 package com.vnu.androtweet.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -15,16 +16,20 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.vnu.androtweet.AndroTweet;
 import com.vnu.androtweet.R;
+import com.vnu.androtweet.activities.fragments.AdaptableFragment;
 import com.vnu.androtweet.adapters.ViewPagerAdapter;
+import com.vnu.androtweet.models.Tweet;
 import com.vnu.androtweet.models.User;
 
-public class HomeActivity extends SherlockFragmentActivity implements TabListener{
+public class HomeActivity extends SherlockFragmentActivity implements
+		TabListener {
 	Object selectedTab;
 	ActionBar actionbar;
 	FragmentManager manager;
-	
+
 	ViewPager mViewPager;
 	ViewPagerAdapter mAppSectionsPagerAdapter;
+	AdaptableFragment adapFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,20 +39,21 @@ public class HomeActivity extends SherlockFragmentActivity implements TabListene
 	}
 
 	private void setUpNavigationsTab() {
-		mAppSectionsPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+		mAppSectionsPagerAdapter = new ViewPagerAdapter(
+				getSupportFragmentManager());
 		actionbar = getSupportActionBar();
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionbar.setDisplayShowTitleEnabled(true);
-		
-		 mViewPager = (ViewPager) findViewById(R.id.pager);
-	        mViewPager.setAdapter(mAppSectionsPagerAdapter);
-	        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-	            @Override
-	            public void onPageSelected(int position) {
-	                actionbar.setSelectedNavigationItem(position);
-	            }
-	        });
 
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mAppSectionsPagerAdapter);
+		mViewPager
+				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+					@Override
+					public void onPageSelected(int position) {
+						actionbar.setSelectedNavigationItem(position);
+					}
+				});
 
 		Tab tabHome = actionbar.newTab().setTag("HomeFragment")
 				.setIcon(R.drawable.ic_home).setTabListener(this);
@@ -61,13 +67,14 @@ public class HomeActivity extends SherlockFragmentActivity implements TabListene
 		actionbar.addTab(tabMentions);
 		actionbar.addTab(tabHash);
 		actionbar.addTab(tabProfile);
-//		actionbar.selectTab(tabHome);
+		// actionbar.selectTab(tabHome);
 	}
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-
 		mViewPager.setCurrentItem(tab.getPosition());
+		adapFragment = (AdaptableFragment) mAppSectionsPagerAdapter.getItem(tab
+				.getPosition());
 	}
 
 	@Override
@@ -78,6 +85,17 @@ public class HomeActivity extends SherlockFragmentActivity implements TabListene
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode,
+			Intent resultData) {
+		if (requestCode == ComposeActivity.COMPOSE_ACTIVITY_ID) {
+			if (resultCode == Activity.RESULT_OK) {
+				Tweet tweet = (Tweet) resultData.getSerializableExtra("tweet");
+				adapFragment.prependTweet(tweet);
+			}
+		}
 	}
 
 	@Override
@@ -99,8 +117,8 @@ public class HomeActivity extends SherlockFragmentActivity implements TabListene
 		startActivity(logout);
 		finish();
 	}
-	
-	public void onProfileClick(View v){
+
+	public void onProfileClick(View v) {
 		Intent i = new Intent(this, UserProfileActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		User u = (User) v.getTag();

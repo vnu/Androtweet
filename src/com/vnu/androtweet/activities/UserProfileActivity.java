@@ -41,7 +41,10 @@ public class UserProfileActivity extends SherlockFragmentActivity {
 		super.onResume();
 		FragmentManager mgr = getSupportFragmentManager();
 		FragmentTransaction ft = mgr.beginTransaction();
-		fragment.setUser(user);
+		if(fragment.getUser() != user){
+			fragment.setUser(user);
+			fragment.setProfUserline(null);
+		}
 		ft.replace(R.id.frame_profile, fragment);
 		ft.commit();
 	}
