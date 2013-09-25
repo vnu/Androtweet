@@ -29,7 +29,7 @@ public class UserlineFragment extends TweetlineFragment {
 
 	ArrayList<Tweet> tweets;
 	RequestParams params = null;
-	String screen_name = null;
+	String screen_name = "";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,11 @@ public class UserlineFragment extends TweetlineFragment {
 		if (getActivity().getLocalClassName().equalsIgnoreCase(
 				"activities.UserProfileActivity")) {
 			params = new RequestParams();
-			screen_name = (String) getActivity().getActionBar().getTitle();
+			String current_name = (String) getActivity().getActionBar().getTitle();
+			if(screen_name.isEmpty() || !screen_name.equalsIgnoreCase(current_name)){
+				tweets = new ArrayList<Tweet>();
+			}
+			screen_name = current_name;
 			params.put("screen_name", screen_name);
 		}
 		if (tweets.isEmpty()) {
