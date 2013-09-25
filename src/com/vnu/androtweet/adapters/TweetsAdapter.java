@@ -37,7 +37,7 @@ public class TweetsAdapter  extends ArrayAdapter<Tweet>{
         User user = tweet.getUser();
         
         ImageView imageView = (ImageView) view.findViewById(R.id.ivProfilePic);
-        ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), imageView);
+        ImageLoader.getInstance().displayImage(user.getProfileImgUrl(), imageView);
         
         imageView.setTag(user);
         

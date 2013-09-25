@@ -95,10 +95,10 @@ public class ProfileFragment extends SherlockFragment implements AdaptableFragme
 		tvScreenName.setText(user.getName() + " @" + user.getScreenName());
 		tvScreenName.setTag(user.getScreenName());
 		tvStatus.setText(user.getDescription());
-		tvTweets.setText(user.getNumTweets() + " Tweets");
-		tvFollowing.setText(user.getFriendsCount() + " Following");
-		tvFollowers.setText(user.getFollowersCount() + " Followers");
-		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(),
+		tvTweets.setText(user.getTweets() + " Tweets");
+		tvFollowing.setText(user.getFriends() + " Following");
+		tvFollowers.setText(user.getFollowers() + " Followers");
+		ImageLoader.getInstance().displayImage(user.getProfileImgUrl(),
 				ivProfile);
 		setUserTimeline();
 	}

@@ -11,83 +11,120 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Tweet extends BaseModel implements Comparable<Tweet>,Serializable{
-    /**
+public class Tweet extends BaseModel implements Comparable<Tweet>, Serializable {
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6138069312309799186L;
 	private User user;
+	private String body;
+	private String tweetId;
+	private Date createdAt;
+	private boolean isFav;
+	private boolean isRetweet;
 
-    public User getUser() {
-        return user;
-    }
+	public void initialize_tweet(BaseModel bm) {
+		this.setBody(bm.getString("text"));
+		this.setTweetId(bm.getString("id_str"));
+		this.setCreatedAt(bm.getString("created_at"));
+		this.setIsFav(bm.getBoolean("favorited"));
+		this.setIsRetweet(bm.getBoolean("retweeted"));
+	}
 
-    public String getBody() {
-        return getString("text");
-    }
+	public String getTweetId() {
+		return tweetId;
+	}
 
-    public long getId() {
-        return getLong("id");
-    }
-    
-    public Date getCreatedAt(){
-    	SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
-    	Date date = null;
+	public void setTweetId(String tweetId) {
+		this.tweetId = tweetId;
+	}
+
+	public boolean getIsFav() {
+		return isFav;
+	}
+
+	public void setIsFav(boolean isFav) {
+		this.isFav = isFav;
+	}
+
+	public boolean getIsRetweet() {
+		return isRetweet;
+	}
+
+	public void setIsRetweet(boolean isRetweet) {
+		this.isRetweet = isRetweet;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
+
+	public void setCreatedAt(String createdAt) {
+		SimpleDateFormat sdf = new SimpleDateFormat(
+				"EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
+		Date date = null;
 		try {
-			date = sdf.parse(getString("created_at"));
+			date = sdf.parse(createdAt);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-    	return date;
-    }
-    
-    public String getIdStr(){
-    	return getString("id_str");
-    }
+		this.createdAt = date;
+	}
 
-    public boolean isFavorited() {
-        return getBoolean("favorited");
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public boolean isRetweeted() {
-        return getBoolean("retweeted");
-    }
+	public String getBody() {
+		return this.body;
+	}
 
-    public static Tweet fromJson(JSONObject jsonObject) {
-        Tweet tweet = new Tweet();
-        try {
-            tweet.jsonObject = jsonObject;
-            tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return tweet;
-    }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-    public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
-        ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
+	public static Tweet fromJson(JSONObject jsonObject) {
+		Tweet tweet = new Tweet();
+		try {
+			tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+			BaseModel bm = new BaseModel();
+			bm.jsonObject = jsonObject;
+			tweet.initialize_tweet(bm);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return tweet;
+	}
 
-        for (int i=0; i < jsonArray.length(); i++) {
-            JSONObject tweetJson = null;
-            try {
-                tweetJson = jsonArray.getJSONObject(i);
-            } catch (Exception e) {
-                e.printStackTrace();
-                continue;
-            }
+	public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
+		ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
 
-            Tweet tweet = Tweet.fromJson(tweetJson);
-            if (tweet != null) {
-                tweets.add(tweet);
-            }
-        }
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject tweetJson = null;
+			try {
+				tweetJson = jsonArray.getJSONObject(i);
+			} catch (Exception e) {
+				e.printStackTrace();
+				continue;
+			}
 
-        return tweets;
-    }
+			Tweet tweet = Tweet.fromJson(tweetJson);
+			if (tweet != null) {
+				tweets.add(tweet);
+			}
+		}
+
+		return tweets;
+	}
 
 	@Override
 	public int compareTo(Tweet another) {
-		return (int)(another.getCreatedAt().getTime() - this.getCreatedAt().getTime());
+		return (int) (another.getCreatedAt().getTime() - this.getCreatedAt()
+				.getTime());
 	}
 }

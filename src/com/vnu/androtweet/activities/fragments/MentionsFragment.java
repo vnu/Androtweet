@@ -33,7 +33,7 @@ public class MentionsFragment extends TweetlineFragment {
 	public void getOldTweets() {
 		if (tweets != null && !tweets.isEmpty()) {
 			params = new RequestParams();
-			String max_id = tweets.get(tweets.size() - 1).getIdStr();
+			String max_id = tweets.get(tweets.size() - 1).getTweetId();
 			params.put("max_id", max_id);
 			params.put("count", TWEET_COUNT);
 			getMentionsline(params);

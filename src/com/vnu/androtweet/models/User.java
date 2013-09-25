@@ -4,58 +4,128 @@ import java.io.Serializable;
 
 import org.json.JSONObject;
 
-public class User extends BaseModel implements Serializable{
+public class User extends BaseModel implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 766746845263863121L;
 
-	public String getName() {
-		return getString("name");
+	private String Name;
+	private String userId;
+	private String screenName;
+	private String profileImgUrl;
+	private String profileBgUrl;
+	private String description;
+	private int tweets;
+	private int followers;
+	private int friends;
+	private String jsonStr;
+
+	public void initialize_user(BaseModel bm) {
+		this.setName(bm.getString("name"));
+		this.setUserId(String.valueOf(bm.getLong("id")));
+		this.setScreenName(bm.getString("screen_name"));
+		this.setProfileImgUrl(bm.getString("profile_image_url"));
+		this.setProfileBgUrl(bm.getString("profile_background_image_url"));
+		this.setDescription(bm.getString("description"));
+		this.setTweets(bm.getInt("statuses_count"));
+		this.setFollowers(bm.getInt("followers_count"));
+		this.setFriends(bm.getInt("friends_count"));
+		this.setJsonStr(bm.getJSONString());
 	}
 
-	public long getId() {
-		return getLong("id");
+	public String getName() {
+		return Name;
+	}
+
+	public void setName(String name) {
+		this.Name = name;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getScreenName() {
-		return getString("screen_name");
+		return screenName;
 	}
 
-	public String getProfileImageUrl() {
-		return getString("profile_image_url");
+	public String getProfileImgUrl() {
+		return profileImgUrl;
 	}
 
-	public String getProfileBackgroundImageUrl() {
-		return getString("profile_background_image_url");
+	public void setProfileImgUrl(String profileImgUrl) {
+		this.profileImgUrl = profileImgUrl;
 	}
 
-	public int getNumTweets() {
-		return getInt("statuses_count");
+	public String getProfileBgUrl() {
+		return profileBgUrl;
 	}
 
-	public int getFollowersCount() {
-		return getInt("followers_count");
+	public void setProfileBgUrl(String profileBgUrl) {
+		this.profileBgUrl = profileBgUrl;
 	}
 
-	public int getFriendsCount() {
-		return getInt("friends_count");
+	public int getTweets() {
+		return tweets;
+	}
+
+	public void setTweets(int tweets) {
+		this.tweets = tweets;
+	}
+
+	public int getFollowers() {
+		return followers;
+	}
+
+	public void setFollowers(int followers) {
+		this.followers = followers;
+	}
+
+	public int getFriends() {
+		return friends;
+	}
+
+	public void setFriends(int friends) {
+		this.friends = friends;
+	}
+
+	public void setScreenName(String screenName) {
+		this.screenName = screenName;
 	}
 
 	public String getDescription() {
-		return getString("description");
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public static User fromJson(JSONObject json) {
 		User u = new User();
-
 		try {
-			u.jsonObject = json;
+			BaseModel bm = new BaseModel();
+			bm.jsonObject = json;
+//			u.jsonObject = json;
+			u.initialize_user(bm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return u;
+
+	}
+
+	public String getJsonStr() {
+		return jsonStr;
+	}
+
+	public void setJsonStr(String jsonStr) {
+		this.jsonStr = jsonStr;
 	}
 
 }

@@ -53,7 +53,7 @@ public class UserProfileActivity extends SherlockFragmentActivity {
 		Intent i = new Intent(this, UserProfileActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		User u = (User) v.getTag();
-		i.putExtra("user", u.getJSONString());
+		i.putExtra("user", u.getJsonStr());
 		startActivity(i);
 	}
 

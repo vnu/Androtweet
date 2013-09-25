@@ -26,6 +26,7 @@ public class HomeActivity extends SherlockFragmentActivity implements
 	Object selectedTab;
 	ActionBar actionbar;
 	FragmentManager manager;
+	Tab sTab;
 
 	ViewPager mViewPager;
 	ViewPagerAdapter mAppSectionsPagerAdapter;
@@ -75,6 +76,7 @@ public class HomeActivity extends SherlockFragmentActivity implements
 		mViewPager.setCurrentItem(tab.getPosition());
 		adapFragment = (AdaptableFragment) mAppSectionsPagerAdapter.getItem(tab
 				.getPosition());
+		sTab = tab;
 	}
 
 	@Override
@@ -93,7 +95,9 @@ public class HomeActivity extends SherlockFragmentActivity implements
 		if (requestCode == ComposeActivity.COMPOSE_ACTIVITY_ID) {
 			if (resultCode == Activity.RESULT_OK) {
 				Tweet tweet = (Tweet) resultData.getSerializableExtra("tweet");
-				adapFragment.prependTweet(tweet);
+				if(((String)sTab.getTag()).equals("HomeFragment")){
+					adapFragment.prependTweet(tweet);
+				}
 			}
 		}
 	}
@@ -122,7 +126,7 @@ public class HomeActivity extends SherlockFragmentActivity implements
 		Intent i = new Intent(this, UserProfileActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		User u = (User) v.getTag();
-		i.putExtra("user", u.getJSONString());
+		i.putExtra("user", u.getJsonStr());
 		startActivity(i);
 	}
 }

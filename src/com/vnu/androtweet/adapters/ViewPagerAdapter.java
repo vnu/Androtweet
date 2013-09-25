@@ -17,9 +17,14 @@ import com.vnu.androtweet.activities.fragments.ProfileFragment;
  *
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
+	HomeFragment hf;
+	MentionsFragment mf;
+	MentionsFragment m2f;
+	ProfileFragment pf;
 
 	public ViewPagerAdapter(FragmentManager fm) {
 		super(fm);
+		hf = new HomeFragment();
 	}
 
 	/* (non-Javadoc)
@@ -31,7 +36,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 		SherlockFragment fragment;
         switch (position) {
             case 0:
-            	fragment = new HomeFragment();
+            	fragment = hf;
                 break;
             case 1:
             	fragment = new MentionsFragment();
@@ -43,7 +48,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             	fragment = new ProfileFragment();
                 break;
             default:
-            	fragment = new HomeFragment();
+            	fragment = hf;
                 break;
               
         }
