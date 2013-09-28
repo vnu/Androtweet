@@ -2,9 +2,10 @@ package com.vnu.androtweet.models;
 
 import java.io.Serializable;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User extends BaseModel implements Serializable {
+public class User implements Serializable {
 	/**
 	 * 
 	 */
@@ -19,19 +20,23 @@ public class User extends BaseModel implements Serializable {
 	private int tweets;
 	private int followers;
 	private int friends;
-	private String jsonStr;
 
-	public void initialize_user(BaseModel bm) {
-		this.setName(bm.getString("name"));
-		this.setUserId(String.valueOf(bm.getLong("id")));
-		this.setScreenName(bm.getString("screen_name"));
-		this.setProfileImgUrl(bm.getString("profile_image_url"));
-		this.setProfileBgUrl(bm.getString("profile_background_image_url"));
-		this.setDescription(bm.getString("description"));
-		this.setTweets(bm.getInt("statuses_count"));
-		this.setFollowers(bm.getInt("followers_count"));
-		this.setFriends(bm.getInt("friends_count"));
-		this.setJsonStr(bm.getJSONString());
+	public void initialize_user(JSONObject jo) {
+		try {
+			this.setName(jo.getString("name"));
+			this.setUserId(String.valueOf(jo.getLong("id")));
+			this.setScreenName(jo.getString("screen_name"));
+			this.setProfileImgUrl(jo.getString("profile_image_url"));
+			this.setProfileBgUrl(jo.getString("profile_background_image_url"));
+			this.setDescription(jo.getString("description"));
+			this.setTweets(jo.getInt("statuses_count"));
+			this.setFollowers(jo.getInt("followers_count"));
+			this.setFriends(jo.getInt("friends_count"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public String getName() {
@@ -109,23 +114,12 @@ public class User extends BaseModel implements Serializable {
 	public static User fromJson(JSONObject json) {
 		User u = new User();
 		try {
-			BaseModel bm = new BaseModel();
-			bm.jsonObject = json;
-//			u.jsonObject = json;
-			u.initialize_user(bm);
+			u.initialize_user(json);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return u;
 
-	}
-
-	public String getJsonStr() {
-		return jsonStr;
-	}
-
-	public void setJsonStr(String jsonStr) {
-		this.jsonStr = jsonStr;
 	}
 
 }

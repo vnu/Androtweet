@@ -126,7 +126,7 @@ public class HomeActivity extends SherlockFragmentActivity implements
 		Intent i = new Intent(this, UserProfileActivity.class);
 		i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 		User u = (User) v.getTag();
-		i.putExtra("user", u.getJsonStr());
+		i.putExtra("user", u);
 		startActivity(i);
 	}
 }

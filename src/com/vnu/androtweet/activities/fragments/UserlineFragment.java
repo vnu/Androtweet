@@ -50,6 +50,7 @@ public class UserlineFragment extends TweetlineFragment {
 			String max_id = tweets.get(tweets.size() - 1).getTweetId();
 			params.put("max_id", max_id);
 			params.put("count", TWEET_COUNT);
+			params.put("screen_name", screen_name);
 			getUserline(params);
 		}
 	}

@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Tweet extends BaseModel implements Comparable<Tweet>, Serializable {
+public class Tweet implements Comparable<Tweet>, Serializable {
 	/**
 	 * 
 	 */
@@ -23,12 +23,17 @@ public class Tweet extends BaseModel implements Comparable<Tweet>, Serializable 
 	private boolean isFav;
 	private boolean isRetweet;
 
-	public void initialize_tweet(BaseModel bm) {
-		this.setBody(bm.getString("text"));
-		this.setTweetId(bm.getString("id_str"));
-		this.setCreatedAt(bm.getString("created_at"));
-		this.setIsFav(bm.getBoolean("favorited"));
-		this.setIsRetweet(bm.getBoolean("retweeted"));
+	public void initialize_tweet(JSONObject jo) {
+		try {
+			this.setBody(jo.getString("text"));
+			this.setTweetId(jo.getString("id_str"));
+			this.setCreatedAt(jo.getString("created_at"));
+			this.setIsFav(jo.getBoolean("favorited"));
+			this.setIsRetweet(jo.getBoolean("retweeted"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public String getTweetId() {
@@ -91,9 +96,7 @@ public class Tweet extends BaseModel implements Comparable<Tweet>, Serializable 
 		Tweet tweet = new Tweet();
 		try {
 			tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
-			BaseModel bm = new BaseModel();
-			bm.jsonObject = jsonObject;
-			tweet.initialize_tweet(bm);
+			tweet.initialize_tweet(jsonObject);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
